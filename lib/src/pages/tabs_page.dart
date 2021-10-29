@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/src/models/navigation_model.dart';
+import 'package:news_app/src/providers/navigation_provider.dart';
 import 'package:news_app/src/pages/tab1_page.dart';
 import 'package:news_app/src/pages/tab2_page.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,6 @@ class TabsPage extends StatelessWidget {
   }
 }
 
-///Barra de navegacion inferior
 class _NavigationBarWidget extends StatelessWidget {
   const _NavigationBarWidget({
     Key key,
@@ -24,29 +23,26 @@ class _NavigationBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigationModel = Provider.of<NavigationModel>(context);
+    final navigationModel = Provider.of<NavigationProvider>(context);
 
-    return BottomNavigationBar(currentIndex: navigationModel.currentPage, onTap: (index) => navigationModel.currentPage = index, items: [
-      BottomNavigationBarItem(icon: Icon(Icons.person_outline), title: Text('Para ti')),
-      BottomNavigationBarItem(icon: Icon(Icons.public), title: Text('Encabezados')),
-    ]);
+    return BottomNavigationBar(
+        currentIndex: navigationModel.currentPage,
+        onTap: (index) => navigationModel.currentPage = index,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Para ti'),
+          BottomNavigationBarItem(icon: Icon(Icons.public), label: 'Encabezados'),
+        ]);
   }
 }
 
-///Widget encargado de la paginacion
 class _PageViewWidget extends StatelessWidget {
-  const _PageViewWidget({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final navigationModel = Provider.of<NavigationModel>(context);
+    final navigationProvider = Provider.of<NavigationProvider>(context);
 
     return PageView(
-      //inhabilitar el scroll horizontal del pageview
       physics: NeverScrollableScrollPhysics(),
-      controller: navigationModel.pageController,
+      controller: navigationProvider.pageController,
       children: <Widget>[
         Tab1Page(),
         Tab2Page(),

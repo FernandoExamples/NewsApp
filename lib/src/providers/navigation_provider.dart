@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class NavigationModel with ChangeNotifier {
+class NavigationProvider with ChangeNotifier {
   int _currentPage = 0;
   final _pageController = new PageController();
 
-  //Get y Set de currentPage
   int get currentPage => this._currentPage;
 
   set currentPage(int page) {
@@ -13,6 +12,5 @@ class NavigationModel with ChangeNotifier {
     notifyListeners();
   }
 
-  //get de PageController
   PageController get pageController => this._pageController;
 }

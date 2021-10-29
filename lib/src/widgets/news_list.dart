@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/src/models/article.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:news_app/src/models/news_model.dart';
-import 'package:news_app/src/themes/darkTheme.dart';
+import 'package:news_app/src/models/news.dart';
+import 'package:news_app/src/themes/dark_theme.dart';
 
 class NewsList extends StatelessWidget {
   final List<Article> news;
@@ -62,7 +63,7 @@ class _TarjetaTopBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text('${index + 1} ', style: TextStyle(color: myTheme.accentColor)),
-          Text('${noticia.source.name}'),
+          Text('${noticia.source}'),
         ],
       ),
     );

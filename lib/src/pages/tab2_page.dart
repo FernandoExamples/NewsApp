@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/src/models/category_model.dart';
-import 'package:news_app/src/services/news_service.dart';
-import 'package:news_app/src/themes/darkTheme.dart';
+import 'package:news_app/src/models/category.dart';
+import 'package:news_app/src/providers/news_provider.dart';
+import 'package:news_app/src/themes/dark_theme.dart';
 import 'package:news_app/src/widgets/news_list.dart';
 import 'package:provider/provider.dart';
 
 class Tab2Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final newsService = Provider.of<NewsService>(context);
+    final newsProvider = Provider.of<NewsProvider>(context);
 
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: <Widget>[
             _CategoryList(),
-            (newsService.getCategorySelectedArticles().length > 0)
+            newsProvider.getCategorySelectedArticles().length > 0
                 ? Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: NewsList(newsService.getCategorySelectedArticles()),
+                      padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+                      child: NewsList(newsProvider.getCategorySelectedArticles()),
                     ),
                   )
                 : Expanded(child: Center(child: CircularProgressIndicator()))
@@ -33,14 +33,13 @@ class Tab2Page extends StatelessWidget {
 class _CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final categories = Provider.of<NewsService>(context).categories;
-    final traduction = Provider.of<NewsService>(context).categoriesTraduction;
+    final categories = Provider.of<NewsProvider>(context).categories;
+    final traduction = Provider.of<NewsProvider>(context).categoriesTraduction;
 
     return Container(
       width: double.infinity,
       height: 80,
       child: ListView.builder(
-        //Cambiar el comportamiento de la animacion scroll del listview
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
@@ -70,8 +69,8 @@ class _CategoryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final newsService = Provider.of<NewsService>(context, listen: false);
-        newsService.categorySelected = category.name;
+        final provider = Provider.of<NewsProvider>(context, listen: false);
+        provider.categorySelected = category.name;
       },
       child: Container(
         width: 40,
@@ -81,11 +80,11 @@ class _CategoryButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.white,
         ),
-        child: Consumer<NewsService>(
-          builder: (context, NewsService service, Widget child) {
+        child: Consumer<NewsProvider>(
+          builder: (context, NewsProvider provider, Widget child) {
             return Icon(
               category.icon,
-              color: category.name == service.categorySelected ? myTheme.accentColor : Colors.black54,
+              color: category.name == provider.categorySelected ? myTheme.accentColor : Colors.black54,
             );
           },
         ),

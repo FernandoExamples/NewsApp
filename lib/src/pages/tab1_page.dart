@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/src/providers/news_provider.dart';
 import 'package:news_app/src/services/news_service.dart';
 import 'package:news_app/src/widgets/news_list.dart';
 import 'package:provider/provider.dart';
@@ -17,14 +18,14 @@ class _Tab1PageState extends State<Tab1Page> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
 
-    final headlines = Provider.of<NewsService>(context).headLines;
+    final headlines = Provider.of<NewsProvider>(context).headLines;
 
     return SafeArea(
       child: Scaffold(
         body: (headlines.length == 0)
             ? Center(child: CircularProgressIndicator())
             : Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: NewsList(headlines),
               ),
       ),
