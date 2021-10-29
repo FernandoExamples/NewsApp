@@ -84,7 +84,7 @@ class _CategoryButton extends StatelessWidget {
           builder: (context, NewsProvider provider, Widget child) {
             return Icon(
               category.icon,
-              color: category.name == provider.categorySelected ? myTheme.accentColor : Colors.black54,
+              color: category.name == provider.categorySelected ? darkTheme.accentColor : Colors.black54,
             );
           },
         ),

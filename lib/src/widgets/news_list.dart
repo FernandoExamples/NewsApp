@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:news_app/src/models/article.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:news_app/src/models/news.dart';
-import 'package:news_app/src/themes/dark_theme.dart';
-
 class NewsList extends StatelessWidget {
   final List<Article> news;
 
@@ -62,7 +59,7 @@ class _TarjetaTopBar extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10),
       child: Row(
         children: <Widget>[
-          Text('${index + 1} ', style: TextStyle(color: myTheme.accentColor)),
+          Text('${index + 1} ', style: TextStyle(color: Theme.of(context).accentColor)),
           Text('${noticia.source}'),
         ],
       ),
@@ -142,7 +139,8 @@ class _TarjetaBotones extends StatelessWidget {
         children: <Widget>[
           RawMaterialButton(
             onPressed: () {},
-            fillColor: myTheme.accentColor,
+            fillColor: Theme.of(context).accentColor,
+            textStyle: Theme.of(context).textTheme.button,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Icon(Icons.star_border),
           ),
@@ -150,6 +148,7 @@ class _TarjetaBotones extends StatelessWidget {
           RawMaterialButton(
             onPressed: () => _launchURL(noticia.url),
             fillColor: Colors.blue,
+            textStyle: Theme.of(context).textTheme.button,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Icon(Icons.more),
           )

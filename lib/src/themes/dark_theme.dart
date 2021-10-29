@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-final myTheme = ThemeData.dark().copyWith(
+final darkTheme = ThemeData.dark().copyWith(
   accentColor: Colors.red,
 );
