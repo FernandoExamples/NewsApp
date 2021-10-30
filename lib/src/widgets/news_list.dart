@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/src/models/article.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:news_app/src/routes.dart';
 
 class NewsList extends StatelessWidget {
   final List<Article> news;
@@ -30,15 +30,20 @@ class Noticia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        _TarjetaTopBar(
+      children: [
+        _CardTopBar(
           noticia,
           index,
         ),
-        _TarjetaTitutlo(noticia),
-        _TarjetaImagen(noticia),
-        _TarjetaBody(noticia),
-        _TarjetaBotones(noticia),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text(
+            noticia.title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
+        ),
+        _CardImagen(noticia),
+        _CardBotones(noticia),
         Divider(),
         SizedBox(height: 10),
       ],
@@ -46,11 +51,11 @@ class Noticia extends StatelessWidget {
   }
 }
 
-class _TarjetaTopBar extends StatelessWidget {
+class _CardTopBar extends StatelessWidget {
   final Article noticia;
   final index;
 
-  const _TarjetaTopBar(this.noticia, this.index);
+  const _CardTopBar(this.noticia, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +63,7 @@ class _TarjetaTopBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10),
       margin: EdgeInsets.only(bottom: 10),
       child: Row(
-        children: <Widget>[
+        children: [
           Text('${index + 1} ', style: TextStyle(color: Theme.of(context).accentColor)),
           Text('${noticia.source}'),
         ],
@@ -67,26 +72,10 @@ class _TarjetaTopBar extends StatelessWidget {
   }
 }
 
-class _TarjetaTitutlo extends StatelessWidget {
-  final Article noticia;
-  const _TarjetaTitutlo(this.noticia);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Text(
-        noticia.title,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-      ),
-    );
-  }
-}
-
-class _TarjetaImagen extends StatelessWidget {
+class _CardImagen extends StatelessWidget {
   final Article noticia;
 
-  const _TarjetaImagen(this.noticia);
+  const _CardImagen(this.noticia);
 
   @override
   Widget build(BuildContext context) {
@@ -105,63 +94,19 @@ class _TarjetaImagen extends StatelessWidget {
   }
 }
 
-class _TarjetaBody extends StatelessWidget {
+class _CardBotones extends StatelessWidget {
   final Article noticia;
 
-  const _TarjetaBody(this.noticia);
+  const _CardBotones(this.noticia);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: <Widget>[
-          InkWell(
-            child: Text(noticia.description != null ? noticia.description : ''),
-            onTap: () => _launchURL(noticia.url),
-          ),
-        ],
+      child: ElevatedButton(
+        onPressed: () => Navigator.of(context).pushNamed(Routes.DETAILS, arguments: noticia),
+        child: Text('Leer más'),
+        style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor, shape: StadiumBorder()),
       ),
     );
-  }
-}
-
-class _TarjetaBotones extends StatelessWidget {
-  final Article noticia;
-
-  const _TarjetaBotones(this.noticia);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RawMaterialButton(
-            onPressed: () {},
-            fillColor: Theme.of(context).accentColor,
-            textStyle: Theme.of(context).textTheme.button,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Icon(Icons.star_border),
-          ),
-          SizedBox(width: 20),
-          RawMaterialButton(
-            onPressed: () => _launchURL(noticia.url),
-            fillColor: Colors.blue,
-            textStyle: Theme.of(context).textTheme.button,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Icon(Icons.more),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-_launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    print('Could not launch $url');
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_app/src/models/article.dart';
 import 'package:news_app/src/models/category.dart';
-import 'package:news_app/src/models/news.dart';
 import 'package:news_app/src/services/news_service.dart';
 
 class NewsProvider with ChangeNotifier {
