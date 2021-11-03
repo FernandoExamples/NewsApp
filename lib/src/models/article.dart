@@ -46,4 +46,9 @@ class Article {
         "publishedAt": publishedAt.toIso8601String(),
         "content": content,
       };
+
+  String get imageURL {
+    if (urlToImage == null || !urlToImage.startsWith('http')) return null;
+    return urlToImage;
+  }
 }

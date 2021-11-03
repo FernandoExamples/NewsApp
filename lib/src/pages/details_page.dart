@@ -8,7 +8,6 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final article = ModalRoute.of(context).settings.arguments as Article;
-    print(article.toMap());
 
     return Scaffold(
       body: CustomScrollView(
@@ -43,7 +42,7 @@ class DetailsPage extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image:
-                  article.urlToImage != null ? NetworkImage(article.urlToImage) : AssetImage('assets/img/no-image.png'),
+                  article.imageURL != null ? NetworkImage(article.urlToImage) : AssetImage('assets/img/no-image.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -108,12 +107,13 @@ class DetailsPage extends StatelessWidget {
     ];
 
     newsProvider.headLines.forEach((article) {
+      print(article.urlToImage);
       articles.add(
         ListTile(
           onTap: () => _launchURL(article.url),
           title: Text(article.title),
           trailing:
-              article.urlToImage != null ? Image.network(article.urlToImage) : Image.asset('assets/img/no-image.png'),
+              article.imageURL != null ? Image.network(article.urlToImage) : Image.asset('assets/img/no-image.png'),
         ),
       );
       articles.add(Divider());

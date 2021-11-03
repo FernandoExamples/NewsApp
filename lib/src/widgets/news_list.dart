@@ -83,7 +83,7 @@ class _CardImagen extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ClipRRect(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
-        child: noticia.urlToImage != null
+        child: noticia.imageURL != null
             ? FadeInImage(
                 placeholder: AssetImage('assets/img/giphy.gif'),
                 image: NetworkImage(noticia.urlToImage),
